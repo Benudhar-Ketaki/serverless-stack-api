@@ -1,7 +1,7 @@
 # NOTE: update this with your service name
 service: notes-api
 
-# Create an optimized package for our functions 
+# Create an optimized package for our functions
 package:
   individually: true
 
@@ -19,7 +19,6 @@ provider:
   #  SAMPLE_ENV_VAR: ${env:SAMPLE_ENV_VAR}
   environment:
     tableName: notes
-  
 
   iamRoleStatements:
     - Effect: Allow
@@ -54,19 +53,22 @@ functions:
     events:
       - http:
           path: notes
-          method: get 
+          method: get
           authorizer: aws_iam
   update:
     handler: update.main
     events:
       - http:
           path: notes/{id}
-          method: put 
+          method: put
           authorizer: aws_iam
-  delete: 
+  delete:
     handler: delete.main
     events:
       - http:
           path: notes/{id}
-          method: delete 
-          authorizer: aws_iam                     
+          method: delete
+          authorizer: aws_iam
+
+resources:
+  - ${file(resources/api-gateway-errors.yml)}
